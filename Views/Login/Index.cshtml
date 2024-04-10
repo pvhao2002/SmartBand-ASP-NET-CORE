@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@model WebBanHang.Models.Entities.Users
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var error = HttpContextAccessor.HttpContext.Session.GetString("error");
+    var success = HttpContextAccessor.HttpContext.Session.GetString("success");
+}
+
+<div class="page section-header text-center">
+    <div class="page-title">
+        <div class="wrapper">
+            <h1 class="page-width">Đăng nhập</h1>
+        </div>
+    </div>
+</div>
+<!--End Page Title-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+            <div class="mb-4">
+                @using (Html.BeginForm("doLogin", "Login", FormMethod.Post, new { @class = "contact-form" }))
+                {
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+
+                            @if (!string.IsNullOrEmpty(error))
+                            {
+                                <span class="text-danger">@error</span>
+                                HttpContextAccessor.HttpContext.Session.SetString("error", string.Empty);
+                            }
+                            else if (!string.IsNullOrEmpty(success))
+                            {
+                                <span class="text-success">@success</span>
+                                HttpContextAccessor.HttpContext.Session.SetString("success", string.Empty);
+                            }
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="CustomerEmail">Email</label>
+                                @Html.TextBoxFor(m => m.email, new
+                           {
+                               autocorrect = "off",
+                               autocapitalize = "off",
+                               type = "email",
+                               placeholder = "abc@gmail.com"
+                           })
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="CustomerPassword">Mật khẩu</label>
+                                @Html.PasswordFor(m => m.password, new
+                           {
+                               placeholder = "*******"
+                           })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center col-12 col-sm-12 col-md-12 col-lg-12">
+                            <input type="submit" class="btn mb-3" name="login" value="Đăng nhập">
+                            <p class="mb-4">
+                                <a href="/Register" id="customer_register_link">Tạo tài khoản</a>
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

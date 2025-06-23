@@ -53,8 +53,8 @@
                     </div>
                 </div>
                 <div class="sidebar_widget static-banner">
-                    <img src=@Url.Content("~/assets/client/images/slideshow-banners/banner4.jpg") alt="Laptop" width="250"
-                         height="400" />
+                    <img src=@Url.Content("~/assets/client/images/slideshow-banners/banner4.jpg") alt="Laptop" 
+                         style="width: 200px; height: 300px; object-fit: cover;"/>
                 </div>
                 <div class="sidebar_widget">
                     <div class="widget-title">
@@ -150,7 +150,7 @@
                 <!--End Toolbar-->
                 <div class="grid-products grid--view-items">
                     <div class="row">
-                        @if (Model.listProduct == null || Model.listProduct.Count == 0)
+                        @if (Model.listProduct.Count == 0)
                         {
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="section-header text-center">
@@ -169,13 +169,13 @@
                                         <a href="/Product/Detail/@item.product_id">
                                             <!-- image -->
                                             <img class="primary blur-up lazyload"
-                                                 data-src=@Url.Content(item.product_image)
-                                                 src=@Url.Content(item.product_image) alt="image" title="product">
+                                                 data-src="@Url.Content(item.product_image)"
+                                                 src="@Url.Content(item.product_image)" alt="image" title="product">
                                             <!-- End image -->
                                             <!-- Hover image -->
                                             <img class="hover blur-up lazyload"
-                                                 data-src=@Url.Content(item.product_image)
-                                                 src=@Url.Content(item.product_image) alt="image" title="product">
+                                                 data-src="@Url.Content(item.product_image)"
+                                                 src="@Url.Content(item.product_image)" alt="image" title="product">
                                             <!-- End hover image -->
                                         </a>
                                         <!-- end product image -->

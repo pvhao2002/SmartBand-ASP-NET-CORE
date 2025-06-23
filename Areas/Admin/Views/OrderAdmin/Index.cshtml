@@ -1,0 +1,115 @@
+@model ICollection<WebBanHang.Models.Entities.Orders>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body table-responsive">
+            <table class="table table-bordered ">
+                <thead>
+                <tr>
+                    <th scope="col"> Mã đơn hàng</th>
+                    <th> Email</th>
+                    <th> Địa chỉ giao hàng</th>
+                    <th> Số điện thoại</th>
+                    <th> Họ và tên</th>
+                    <th> Tổng tiền</th>
+                    <th> Trạng thái</th>
+                    <th> #</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope='row'>@item.order_id</td>
+                        <td class='text-truncate' title='@item.user.email'>@item.user.email</td>
+                        <td>@item.shipping_address</td>
+                        <td>@item.phone_number</td>
+                        <td>@item.full_name</td>
+                        <td>@item.total_price</td>
+                        @switch (item.status)
+                        {
+                            case "in_progress":
+                                <td>Đã xác nhận đơn hàng. Đơn hàng đang được đóng gói</td>
+                                break;
+                            case "in_shipping":
+                                <td>Đơn hàng đang giao đến khách hàng</td>
+                                break;
+                            case "done":
+                                <td>Đã giao hàng</td>
+                                break;
+                            case "cancel":
+                                <td>Đã bị hủy bởi người bán</td>
+                                break;
+                            default:
+                                <td>Đang chờ xác nhận</td>
+                                break;
+                        }
+                        <td>
+                            <button class="btn btn-sm btn-info" onclick="toggleDetails('@item.order_id')">Chi tiết</button>
+                            @if ("pending".Equals(item.status))
+                            {
+                                <a href='/Admin/OrderAdmin/Accept/@item.order_id' class='btn btn-outline-success'>Chấp
+                                    nhận</a>
+                                <a href='/Admin/OrderAdmin/Reject/@item.order_id' class='btn btn-outline-danger'>Từ
+                                    chối</a>
+                            }
+                            else if ("in_progress".Equals(item.status))
+                            {
+                                <a href='/Admin/OrderAdmin/Shipping/@item.order_id' class='btn btn-outline-success'>Giao hàng</a>
+                            }
+                            else if ("in_shipping".Equals(item.status))
+                            {
+                                <a href='/Admin/OrderAdmin/Done/@item.order_id' class='btn btn-outline-success'>Hoàn
+                                    thành đơn hàng</a>
+                            }
+                        </td>
+                    </tr>
+                    <tr id="details-@item.order_id" style="display: none;" class="bg-light">
+                        <td colspan="9">
+                            <table class="table table-sm table-bordered mb-0">
+                                <thead class="table-light">
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var detail in item.order_items)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span>@detail.product.product_name</span>
+                                            <img src="@Url.Content(detail.product.product_image)" alt="" style="width: 100px; height: 100px;">
+                                        </td>
+                                        <td>@($"{detail.product.price:N0} ₫")</td>
+                                        <td>@detail.quantity</td>
+                                        <td>@($"{detail.product.price * detail.quantity:N0} ₫")</td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleDetails(orderId) {
+        var row = document.getElementById("details-" + orderId);
+        if (row.style.display === "none") {
+            row.style.display = "table-row";
+        } else {
+            row.style.display = "none";
+        }
+    }
+</script>

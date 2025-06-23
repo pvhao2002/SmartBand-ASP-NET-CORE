@@ -1,0 +1,36 @@
+@model ICollection<WebBanHang.Models.Entities.Users>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body table-responsive">
+            <table class="table table-bordered ">
+                <thead>
+                <tr>
+                    <th scope="col"> Mã người dùng</th>
+                    <th> Email</th>
+                    <th> Họ tên</th>
+                    <th> #</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope='row'>@item.userId</td>
+                        <td class='text-truncate' title='@item.email'>@item.email</td>
+                        <td>@item.full_name</td>
+                        <td>
+                            <a href='/Admin/UserAdmin/Delete/@item.userId' class='btn btn-outline-danger'>Xóa</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

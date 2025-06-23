@@ -4,15 +4,8 @@ using WebBanHang.Models;
 namespace WebBanHang.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class HomeAdminController : Controller
+    public class HomeAdminController(DBContext ctx) : Controller
     {
-        private readonly DBContext ctx;
-
-        public HomeAdminController(DBContext ctx)
-        {
-            this.ctx = ctx;
-        }
-
         public IActionResult Index()
         {
             var totalP = ctx.products.Where(item => item.status.Equals("active")).ToList().Count;

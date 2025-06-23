@@ -1,38 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "E:\\workspace\\duy pham\\WebBanHang\\WebBanHang.csproj": {}
+    "/Users/kira/Desktop/workspace/SmartBand-ASP-NET-CORE/WebBanHang.csproj": {}
   },
   "projects": {
-    "E:\\workspace\\duy pham\\WebBanHang\\WebBanHang.csproj": {
+    "/Users/kira/Desktop/workspace/SmartBand-ASP-NET-CORE/WebBanHang.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\workspace\\duy pham\\WebBanHang\\WebBanHang.csproj",
+        "projectUniqueName": "/Users/kira/Desktop/workspace/SmartBand-ASP-NET-CORE/WebBanHang.csproj",
         "projectName": "WebBanHang",
-        "projectPath": "E:\\workspace\\duy pham\\WebBanHang\\WebBanHang.csproj",
-        "packagesPath": "C:\\Users\\haodeptrai\\.nuget\\packages\\",
-        "outputPath": "E:\\workspace\\duy pham\\WebBanHang\\obj\\",
+        "projectPath": "/Users/kira/Desktop/workspace/SmartBand-ASP-NET-CORE/WebBanHang.csproj",
+        "packagesPath": "/Users/kira/.nuget/packages/",
+        "outputPath": "/Users/kira/Desktop/workspace/SmartBand-ASP-NET-CORE/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\haodeptrai\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/kira/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -40,11 +32,16 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
@@ -84,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.411/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

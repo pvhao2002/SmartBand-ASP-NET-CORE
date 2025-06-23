@@ -36,7 +36,7 @@
                             <td scope='row'>@item.product_id</td>
                             <td class='text-truncate' style='max-width: 250px;' title='@item.product_name'>@item.product_name</td>
                             <td>@item.price</td>
-                            <td><img src=@Url.Content(item.product_image) alt='IMG' class='mt-2' style='width: 100px; height: 100px; border-radius: 0 !important;' /></td>
+                            <td><img src="@Url.Content(item.product_image)" alt='IMG' class='mt-2' style='width: 100px; height: 100px; border-radius: 0 !important;' /></td>
                             <td>@item.category.category_name</td>
                             <td class='text-truncate' style='max-width: 250px;' title='@item.description'>@item.description</td>
                             <td>

@@ -7,20 +7,14 @@ namespace WebBanHang.Areas.Admin.Controllers
 {
 
     [Area("Admin")]
-    public class ProductAdminController : Controller
+    public class ProductAdminController(DBContext ctx) : Controller
     {
-        private readonly DBContext ctx;
-
-        public ProductAdminController(DBContext ctx)
-        {
-            this.ctx = ctx;
-        }
         public IActionResult Index()
         {
             var list = ctx.products
                 .Include(item => item.category)
                     .Where(item => item.status.Equals("active"))
-            .ToList()
+                    .ToList()
                     .Select(item => new Product
                     {
                         product_id = item.product_id,

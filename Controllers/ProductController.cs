@@ -1,44 +1,46 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using WebBanHang.Models.Entities;
-using WebBanHang.Models;
 using Microsoft.EntityFrameworkCore;
+using WebBanHang.Models;
+using WebBanHang.Models.Entities;
 
 namespace WebBanHang.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController(DBContext ctx) : Controller
     {
-        private readonly DBContext ctx;
-
-        public ProductController(DBContext ctx)
-        {
-            this.ctx = ctx;
-        }
-
-        public IActionResult Index(int? cate)
+        public IActionResult Index(int? cate, string search = "")
         {
             ViewBag.CurrentController = "Product";
+
             var listCate = ctx.categories
-                .Where(item => item.status.Equals("active"))
+                .Where(item => item.status == "active")
                 .ToList();
-            List<Product> products;
-            if (cate != null)
+
+            var products = ctx.products
+                .Include(p => p.category)
+                .Where(p => p.status == "active")
+                .AsEnumerable();
+
+            if (cate.HasValue)
             {
-                products = ctx.products
-                    .Include(item => item.category)
-                    .Where(item => item.category.category_id == cate
-                    && item.status.Equals("active"))
-                    .ToList();
+                products = products.Where(p => p.category.category_id == cate);
             }
-            else
+
+            if (!string.IsNullOrWhiteSpace(search))
             {
-                products = ctx.products
-                    .Where(item => "active".Equals(item.status))
-                    .ToList();
+                var normalizedSearch = RemoveDiacritics(search).ToLower();
+                products = products.Where(p =>
+                    RemoveDiacritics(p.product_name).ToLower().Contains(normalizedSearch)
+                    || (!string.IsNullOrEmpty(p.description) &&
+                        RemoveDiacritics(p.description).ToLower().Contains(normalizedSearch))
+                    || p.product_id.ToString().Contains(search)
+                );
             }
-            var productModel = new ProductViewModel(products, listCate);
-            return View(productModel);
+
+            var productList = products.ToList();
+            var model = new ProductViewModel(productList, listCate, search);
+            return View(model);
         }
+
 
         public ActionResult Detail(int id)
         {
@@ -48,7 +50,27 @@ namespace WebBanHang.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             return View(p);
+        }
+
+        public static string RemoveDiacritics(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return string.Empty;
+
+            var normalized = text.Normalize(System.Text.NormalizationForm.FormD);
+            var builder = new System.Text.StringBuilder();
+
+            foreach (var ch in normalized)
+            {
+                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(ch);
+                if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    builder.Append(ch);
+                }
+            }
+
+            return builder.ToString().Normalize(System.Text.NormalizationForm.FormC);
         }
     }
 }
